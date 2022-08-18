@@ -1,0 +1,32 @@
+.todoitem {
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 10px;
+  display: flex;
+  align-items: flex-start;
+  color: #f4fbff;
+  background-color: #014f85;
+  box-shadow: 0 0 1px 0 #000;
+}
+
+.todoitem .completed {
+  width: 20px;
+  margin: 2px 5px 0 0;
+  color: #80cefd;
+  flex-shrink: 0;
+  appearance: none;
+  cursor: pointer;
+}
+
+.todoitem .data {
+  display: flex;
+  flex-direction: column;
+}
+
+.todoitem .data .date {
+  color: #79c7f7;
+}
+
+.todoitem .data .list {
+  color: rgba(255, 255, 255, 0.8);
+}

@@ -1,5 +1,6 @@
+import Footer from "./components/Footer";
 import Header from "./components/Header";
-/* import NewTodo from "./components/NewTodo"; */
+import NewTodo from "./components/NewTodo";
 import TodoList from "./components/TodoList";
 
 import "./styles/App.css";
@@ -19,7 +20,8 @@ function App() {
     <div className="App">
       <Header todos={todos} />
       <TodoList todos={todos} />
-      {/*  <NewTodo /> */}
+      <Footer />
+      <NewTodo />
     </div>
   );
 }

@@ -1,7 +1,11 @@
+import { ImCheckboxUnchecked, ImCheckboxChecked } from "react-icons/im";
+
+import "../styles/TodoItem.css";
+
 const TodoItem = () => {
   return (
     <div className="todoitem">
-      <input className="completed" type="checkbox" />
+      <ImCheckboxUnchecked className="completed" />
       <div className="data">
         <span className="description">
           Todo test with a moderate long task to test when there is an overflow

@@ -1,8 +1,9 @@
 .header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  position: relative;
   height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   background: rgb(11, 103, 164);
   background: linear-gradient(
     0deg,
@@ -10,7 +11,7 @@
     rgba(1, 112, 174, 1) 50%,
     rgba(10, 93, 147, 1) 100%
   );
-  box-shadow: 0 1px 3px 0 black;
+  box-shadow: 0 0 5px #202020;
 }
 
 .header .logo-icon {

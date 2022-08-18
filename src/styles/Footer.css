@@ -1,0 +1,40 @@
+.footer {
+  position: relative;
+  height: 40px;
+  background-color: #0276bd;
+  box-shadow: 0 0 5px #202020;
+}
+
+.footer .fast-note {
+  background-color: transparent;
+  outline: none;
+  border: none;
+  border-bottom: 1px solid black;
+  margin: 0 auto;
+  width: 80%;
+  display: block;
+  height: 30px;
+}
+.footer .fast-note::placeholder {
+  color: #7cb6db;
+  background-color: none;
+  font-size: 1.2em;
+}
+
+.footer .add-note {
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  right: 40px;
+  top: -40px;
+  border-radius: 50%;
+  background-color: #1b1b1b;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.footer .add-note svg {
+  color: #0276bf;
+  width: 80%;
+  height: 80%;
+}

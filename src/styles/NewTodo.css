@@ -1,0 +1,88 @@
+.newtodo {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  max-width: 750px;
+  background-color: #013c6c;
+  top: 0;
+  left: 0;
+}
+
+.newtodo .title {
+  position: relative;
+  height: 40px;
+  width: 100%;
+  background-color: #036eb2;
+  color: white;
+  margin: auto 0;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 0 5px #202020;
+}
+.newtodo .title svg {
+  flex-shrink: 0;
+  width: 20px;
+  margin: 0 20px 0 10px;
+  color: white;
+  height: 100%;
+  cursor: pointer;
+}
+
+.newtodo .data {
+  height: calc(100% - 40px);
+  color: #83cffe;
+  padding: 10px;
+}
+.newtodo .data .input-row {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 10px 0;
+}
+
+.newtodo .data input {
+  color: #7e9eb7;
+  border: none;
+  border-bottom: 1px solid #121212;
+  background-color: transparent;
+  outline: none;
+}
+.newtodo .data input::placeholder {
+  color: #7e9eb7;
+}
+.newtodo .data input:valid {
+  color: white;
+}
+
+.newtodo .data .checkbox {
+  padding: 1px;
+  margin: 20px 0 30px;
+}
+.newtodo .data .checkbox svg {
+  margin: 0 20px 0 0;
+}
+
+input.picker[type="date"]::-webkit-calendar-picker-indicator {
+  width: 0;
+  color: transparent;
+  background: transparent;
+}
+input.picker[type="time"]::-webkit-calendar-picker-indicator {
+  width: 0;
+  color: transparent;
+  background: transparent;
+}
+
+.newtodo .data .input-wrapper {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.newtodo .data .input-wrapper input {
+  margin: 0 10px 0 0;
+}
+.newtodo .data .input-wrapper svg {
+  width: 15px;
+  height: 15px;
+}

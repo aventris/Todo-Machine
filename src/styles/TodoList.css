@@ -1,0 +1,13 @@
+.todolist {
+  height: calc(100% - 80px);
+  padding: 10px;
+  overflow-y: auto;
+}
+
+.todolist p {
+  color: #81cefe;
+}
+
+.todolist .overdue {
+  color: #ff6061;
+}
