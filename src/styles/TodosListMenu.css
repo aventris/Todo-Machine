@@ -1,0 +1,79 @@
+.todoslistmenu {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  max-width: 200px;
+}
+
+.todoslistmenu .current {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+.todoslistmenu .current span {
+  padding: 0 10px;
+  color: white;
+}
+.todoslistmenu .current .icon {
+  transition: transform 200ms ease-in-out;
+}
+.todoslistmenu .current .icon.rotate {
+  transform: rotate(180deg);
+}
+
+.todoslistmenu .lists {
+  width: 100%;
+  max-width: 200px;
+  padding: 20px 0;
+  position: absolute;
+  left: 0;
+  list-style: none;
+  background-color: #004173;
+}
+
+.todoslistmenu .lists.hidden {
+  opacity: 0;
+}
+
+.todoslistmenu .lists li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+  padding: 0 25px;
+  cursor: pointer;
+  height: 40px;
+}
+
+.todoslistmenu .lists li.default {
+  padding-left: 10px;
+}
+
+.todoslistmenu .lists li:hover {
+  background-color: rgba(255, 255, 255, 0.4);
+}
+.todoslistmenu .lists li svg {
+  height: 100%;
+  width: 100%;
+}
+
+.todoslistmenu .lists li .iconcontainer {
+  width: 20px;
+
+  flex-grow: 0;
+  flex-shrink: 0;
+  margin-right: 10px;
+}
+.todoslistmenu .lists li span:first-of-type {
+  display: block;
+  width: 100%;
+
+  text-align: left;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.todoslistmenu .lists li span:last-child {
+  margin-left: 10px;
+}
