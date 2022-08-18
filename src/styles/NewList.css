@@ -1,0 +1,43 @@
+.newlist {
+  width: 90%;
+  max-width: 700px;
+  height: 200px;
+  background-color: #313131;
+  padding: 20px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.newlist h3 {
+  color: #4c9fe6;
+}
+
+.newlist input {
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid black;
+  outline: none;
+  width: 100%;
+  color: white;
+}
+.newlist input:focus {
+  border-bottom: 2px solid #00a3dc;
+}
+.newlist div {
+  width: 100%;
+}
+.newlist div button {
+  float: right;
+  margin-left: 20px;
+  padding: 5px 10px;
+  background-color: transparent;
+  color: #4c9fe6;
+  border: none;
+  cursor: pointer;
+}
+
+.newlist div button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}

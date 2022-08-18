@@ -1,10 +1,33 @@
-import { RiMenuAddFill } from "react-icons/ri";
+import TodosListsFormMenu from "./TodosListsFormMenu";
+
 import { BiArrowBack, BiCalendarEvent } from "react-icons/bi";
 import { ImCheckboxUnchecked, ImCheckboxChecked } from "react-icons/im";
-import { AiFillClockCircle } from "react-icons/ai";
+import {
+  AiFillClockCircle,
+  AiFillDelete,
+  AiFillCloseCircle,
+} from "react-icons/ai";
+
+import { BsCheck } from "react-icons/bs";
 
 import "../styles/NewTodo.css";
 import { useRef } from "react";
+/* import NewList from "./NewList"; */
+
+const todos = [
+  {
+    name: "Default",
+    todos: [{ todo: "First Todo example", date: null, finished: false }],
+  },
+  { name: "Shopping", todos: [] },
+  { name: "Personal", todos: [] },
+  { name: "Work", todos: [] },
+];
+
+const selectOptions = todos.map((todos) => ({
+  value: todos.name,
+  label: todos.name,
+}));
 
 const NewTodo = () => {
   const datePicker = useRef(null);
@@ -21,9 +44,9 @@ const NewTodo = () => {
       <div className="title">
         <BiArrowBack />
         <h3>New Todo</h3>
+        <AiFillDelete />
       </div>
       <form action="" className="data">
-        {/* <div className="input-row"></div> */}
         <div className="input-row">
           <label htmlFor="todo">What is to be done?</label>
           <input type="text" id="todo" placeholder="Enter task" />
@@ -35,8 +58,8 @@ const NewTodo = () => {
         </div>
 
         <div className="input-row">
-          <label htmlFor="date">Deadline date</label>
-          <div className="input-wrapper">
+          <label>Due date</label>
+          <div className="date-time">
             <input
               onClick={toggleDatePicker}
               ref={datePicker}
@@ -45,25 +68,31 @@ const NewTodo = () => {
               id="date"
             />
             <BiCalendarEvent onClick={toggleDatePicker} />
+            <AiFillCloseCircle />
           </div>
 
-          <label htmlFor="hour">Deadline time</label>
-          <div className="input-wrapper">
-            <input className="picker" ref={timePicker} type="time" id="hour" />
+          <label>Time</label>
+          <div className="date-time">
+            <input
+              onClick={toggleTimePicker}
+              className="picker"
+              ref={timePicker}
+              type="time"
+              id="hour"
+            />
             <AiFillClockCircle onClick={toggleTimePicker} />
+            <AiFillCloseCircle />
           </div>
         </div>
-        <label htmlFor="list">Add to list</label>
-        <select name="list" id="list">
-          <option value="defualt">Default</option>
-          <option value="defualt">Shopping list</option>
-          <option value="defualt">Work</option>
-          <option value="defualt">Personal</option>
-        </select>
+        <div className="input-row list">
+          <label htmlFor="list">Add to list</label>
+          <TodosListsFormMenu options={selectOptions} growFromBottom />
+        </div>
         <button>
-          <RiMenuAddFill />
+          <BsCheck />
         </button>
       </form>
+      {/* <NewList /> */}
     </div>
   );
 };
