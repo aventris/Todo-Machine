@@ -11,7 +11,7 @@ import {
 import { BsCheck } from "react-icons/bs";
 
 import "../styles/NewTodo.css";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 /* import NewList from "./NewList"; */
 
 const todos = [
@@ -29,38 +29,105 @@ const selectOptions = todos.map((todos) => ({
   label: todos.name,
 }));
 
-const NewTodo = () => {
+const NewTodo = ({
+  onAddNewTodo: handleNewTodo,
+  isEdit,
+  onCloseForm,
+  data,
+  onEditTodo: handleEditTodo,
+}) => {
   const datePicker = useRef(null);
   const timePicker = useRef(null);
+  const [formData, setFormData] = useState({
+    description: "",
+    date: "",
+    time: "",
+    list: "Default",
+    finished: false,
+  });
 
+  useEffect(() => {
+    if (isEdit) {
+      setFormData({ ...data });
+    }
+  }, []);
+  const handleInput = (e) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value });
+  };
   const toggleDatePicker = () => {
     datePicker.current.showPicker();
   };
   const toggleTimePicker = () => {
     timePicker.current.showPicker();
   };
+  const removeDate = () => {
+    datePicker.current.value = "";
+    setFormData({ ...formData, date: "" });
+    removeTime();
+  };
+  const removeTime = () => {
+    timePicker.current.value = "";
+    setFormData({ ...formData, time: "" });
+  };
+  const handleList = (value) => {
+    setFormData({ ...formData, list: value });
+  };
+  const handleFinished = (value) => {
+    setFormData({ ...formData, finished: value });
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!isEdit) {
+      if (formData.description) {
+        handleNewTodo(formData);
+      }
+    } else {
+      handleEditTodo(formData);
+    }
+  };
+
   return (
     <div className="newtodo">
       <div className="title">
-        <BiArrowBack />
-        <h3>New Todo</h3>
-        <AiFillDelete />
+        <BiArrowBack onClick={() => onCloseForm()} />
+        <h3>{isEdit ? "Update todo" : "New Todo"}</h3>
+        {isEdit ? <AiFillDelete /> : <span className="blank-space"></span>}
       </div>
-      <form action="" className="data">
+      <form onSubmit={handleSubmit} className="data">
         <div className="input-row">
-          <label htmlFor="todo">What is to be done?</label>
-          <input type="text" id="todo" placeholder="Enter task" />
+          <label htmlFor="description">What is to be done?</label>
+          <input
+            onChange={handleInput}
+            value={formData.description}
+            type="text"
+            id="description"
+            placeholder="Enter task"
+            required
+          />
         </div>
+        {isEdit && (
+          <div className="checkbox">
+            {formData.finished ? (
+              <ImCheckboxChecked
+                onClick={() => handleFinished(false)}
+                id="finished"
+              />
+            ) : (
+              <ImCheckboxUnchecked
+                onClick={() => handleFinished(true)}
+                id="finished"
+              />
+            )}
+            <label htmlFor="finished">Is it finished</label>
+          </div>
+        )}
 
-        <div className="checkbox">
-          <ImCheckboxUnchecked id="finished" />
-          <label htmlFor="finished">Is it finished</label>
-        </div>
-
-        <div className="input-row">
+        <div className="input-row time">
           <label>Due date</label>
           <div className="date-time">
             <input
+              onChange={handleInput}
+              value={formData.date}
               onClick={toggleDatePicker}
               ref={datePicker}
               className="picker"
@@ -68,31 +135,39 @@ const NewTodo = () => {
               id="date"
             />
             <BiCalendarEvent onClick={toggleDatePicker} />
-            <AiFillCloseCircle />
+            {formData.date && <AiFillCloseCircle onClick={removeDate} />}
           </div>
-
-          <label>Time</label>
-          <div className="date-time">
-            <input
-              onClick={toggleTimePicker}
-              className="picker"
-              ref={timePicker}
-              type="time"
-              id="hour"
-            />
-            <AiFillClockCircle onClick={toggleTimePicker} />
-            <AiFillCloseCircle />
-          </div>
+          {formData.date && (
+            <>
+              <label>Time</label>
+              <div className="date-time">
+                <input
+                  onChange={handleInput}
+                  value={formData.time}
+                  onClick={toggleTimePicker}
+                  className="picker"
+                  ref={timePicker}
+                  type="time"
+                  id="time"
+                />
+                <AiFillClockCircle onClick={toggleTimePicker} />
+                {formData.time && <AiFillCloseCircle onClick={removeTime} />}
+              </div>
+            </>
+          )}
         </div>
         <div className="input-row list">
           <label htmlFor="list">Add to list</label>
-          <TodosListsFormMenu options={selectOptions} growFromBottom />
+          <TodosListsFormMenu
+            onChange={handleList}
+            value={formData.list}
+            options={selectOptions}
+          />
         </div>
-        <button>
+        <button type="submit">
           <BsCheck />
         </button>
       </form>
-      {/* <NewList /> */}
     </div>
   );
 };

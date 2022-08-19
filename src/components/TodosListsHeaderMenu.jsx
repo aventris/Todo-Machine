@@ -33,8 +33,8 @@ const TodosListMenu = ({ options }) => {
             <span>All lists</span>
             <span>55</span>
           </li>
-          {options.map((option) => (
-            <li className="listitem">
+          {options.map((option, index) => (
+            <li key={index} className="listitem">
               <div className="iconcontainer">
                 <BsCardChecklist color="white" />
               </div>

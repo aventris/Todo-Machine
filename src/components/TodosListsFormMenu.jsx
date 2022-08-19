@@ -5,33 +5,41 @@ import { RiMenuAddFill } from "react-icons/ri";
 
 import "../styles/TodosListsFormMenu.css";
 
-const TodosListsFormMenu = ({ options }) => {
+const TodosListsFormMenu = ({
+  options,
+  value,
+  onChange: handleListSelection,
+}) => {
   const [toggleList, setToggleList] = useState(false);
-  const [selection, setSelection] = useState(options[0].label);
+  const [selection, setSelection] = useState(null);
 
   const handleToggleList = (e) => {
     e.stopPropagation();
-
-    console.log("toggle List", toggleList);
     setToggleList(!toggleList);
   };
   const boxRef = useRef(null);
 
-  const handleClickOutside = (e) => {
-    if (!boxRef.current.contains(e.target) && toggleList) {
-      setToggleList(false);
-      console.log("click outside");
-    }
-  };
-
   const handleSelection = (value) => {
     setToggleList(false);
     setSelection(value);
+    handleListSelection(value);
   };
+
   useEffect(() => {
-    window.addEventListener("click", handleClickOutside);
-    return () => window.removeEventListener("click", handleClickOutside);
+    const handleClickOutside = (e) => {
+      if (boxRef.current && !boxRef.current.contains(e.target)) {
+        setToggleList(false);
+      }
+    };
+
+    document.addEventListener("click", handleClickOutside);
+    return () => document.removeEventListener("click", handleClickOutside);
   }, []);
+
+  useEffect(() => {
+    setSelection(value);
+  }, [value]);
+
   return (
     <div className="todoslist-addtodo">
       <div className="selection">
@@ -42,8 +50,10 @@ const TodosListsFormMenu = ({ options }) => {
         <RiMenuAddFill />
       </div>
       <ul ref={boxRef} className={`${toggleList ? "" : "hidden"}`}>
-        {options.map((option) => (
-          <li onClick={() => handleSelection(option.value)}>{option.label}</li>
+        {options.map((option, index) => (
+          <li key={index} onClick={() => handleSelection(option.value)}>
+            {option.label}
+          </li>
         ))}
       </ul>
     </div>

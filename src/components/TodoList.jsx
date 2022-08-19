@@ -1,7 +1,7 @@
 import TodoItem from "./TodoItem";
 
 import "../styles/TodoList.css";
-const TodoList = () => {
+const TodoList = ({ todos, onToggleEditTodo }) => {
   return (
     <div className="todolist">
       <p className="overdue">Overdue</p>
@@ -9,18 +9,15 @@ const TodoList = () => {
       <p className="">Next week</p>
       <p className="">Next month</p>
       <p className="">Dateless</p>
-      <TodoItem />
-      <TodoItem />
-      <TodoItem />
-      <TodoItem />
-      <TodoItem />
-      <TodoItem />
-      <TodoItem />
-      <TodoItem />
-      <TodoItem />
-      <TodoItem />
-      <TodoItem />
-      <TodoItem />
+      {todos.flatMap((todoList) =>
+        todoList.todos.map((todo, index) => (
+          <TodoItem
+            key={todoList.list + index}
+            todo={{ ...todo, list: todoList.list }}
+            onToggleEditTodo={onToggleEditTodo}
+          />
+        ))
+      )}
     </div>
   );
 };
