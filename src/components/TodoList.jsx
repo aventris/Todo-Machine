@@ -1,7 +1,7 @@
 import TodoItem from "./TodoItem";
 
 import "../styles/TodoList.css";
-const TodoList = ({ todos, onToggleEditTodo }) => {
+const TodoList = ({ todos, onToggleEditTodo, onCompleteTodo }) => {
   return (
     <div className="todolist">
       <p className="overdue">Overdue</p>
@@ -12,6 +12,7 @@ const TodoList = ({ todos, onToggleEditTodo }) => {
       {todos.flatMap((todoList) =>
         todoList.todos.map((todo, index) => (
           <TodoItem
+            onCompleteTodo={onCompleteTodo}
             key={todoList.list + index}
             todo={{ ...todo, list: todoList.list }}
             onToggleEditTodo={onToggleEditTodo}

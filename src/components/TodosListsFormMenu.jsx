@@ -9,6 +9,7 @@ const TodosListsFormMenu = ({
   options,
   value,
   onChange: handleListSelection,
+  onToggleListForm,
 }) => {
   const [toggleList, setToggleList] = useState(false);
   const [selection, setSelection] = useState(null);
@@ -47,7 +48,7 @@ const TodosListsFormMenu = ({
           <span>{selection}</span>
           <FaAngleDown />
         </div>
-        <RiMenuAddFill />
+        <RiMenuAddFill onClick={onToggleListForm} />
       </div>
       <ul ref={boxRef} className={`${toggleList ? "" : "hidden"}`}>
         {options.map((option, index) => (

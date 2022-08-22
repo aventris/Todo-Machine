@@ -14,27 +14,14 @@ import "../styles/NewTodo.css";
 import { useEffect, useRef, useState } from "react";
 /* import NewList from "./NewList"; */
 
-const todos = [
-  {
-    name: "Default",
-    todos: [{ todo: "First Todo example", date: null, finished: false }],
-  },
-  { name: "Shopping", todos: [] },
-  { name: "Personal", todos: [] },
-  { name: "Work", todos: [] },
-];
-
-const selectOptions = todos.map((todos) => ({
-  value: todos.name,
-  label: todos.name,
-}));
-
 const NewTodo = ({
   onAddNewTodo: handleNewTodo,
   isEdit,
   onCloseForm,
   data,
   onEditTodo: handleEditTodo,
+  todos,
+  onToggleListForm,
 }) => {
   const datePicker = useRef(null);
   const timePicker = useRef(null);
@@ -51,6 +38,12 @@ const NewTodo = ({
       setFormData({ ...data });
     }
   }, []);
+  console.log(todos);
+  const selectOptions = todos.map((todos) => ({
+    value: todos.list,
+    label: todos.list,
+  }));
+
   const handleInput = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
@@ -162,6 +155,7 @@ const NewTodo = ({
             onChange={handleList}
             value={formData.list}
             options={selectOptions}
+            onToggleListForm={onToggleListForm}
           />
         </div>
         <button type="submit">

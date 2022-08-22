@@ -5,18 +5,32 @@ import { TiInputChecked } from "react-icons/ti";
 import { RiMenuAddFill } from "react-icons/ri";
 
 import "../styles/TodosListMenu.css";
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
-const TodosListMenu = ({ options }) => {
+const TodosListMenu = ({ options, total, completed, onOpenListForm }) => {
   const [toggleMenu, setToggleMenu] = useState(false);
+  const elementRef = useRef(null);
 
   const currentSelection = "Default";
   const handleToggleMenu = () => {
     setToggleMenu((prev) => !prev);
   };
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (elementRef.current && !elementRef.current.contains(e.target)) {
+        setToggleMenu(false);
+      }
+    };
+
+    document.addEventListener("click", handleClickOutside);
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
   return (
     <React.Fragment>
-      <div className="todoslistmenu">
+      <div className="todoslistmenu" ref={elementRef}>
         <div className="current" onClick={handleToggleMenu}>
           <span>{currentSelection}</span>
 
@@ -31,7 +45,7 @@ const TodosListMenu = ({ options }) => {
               <AiFillHome />
             </div>
             <span>All lists</span>
-            <span>55</span>
+            <span>{total}</span>
           </li>
           {options.map((option, index) => (
             <li key={index} className="listitem">
@@ -39,7 +53,7 @@ const TodosListMenu = ({ options }) => {
                 <BsCardChecklist color="white" />
               </div>
               <span>{option.label}</span>
-              <span>10</span>
+              <span>{option.length}</span>
             </li>
           ))}
           <li className="default">
@@ -47,9 +61,9 @@ const TodosListMenu = ({ options }) => {
               <TiInputChecked width="50" height="25" />
             </div>
             <span>Completed</span>
-            <span></span>
+            <span>{completed}</span>
           </li>
-          <li className="default">
+          <li className="default" onClick={onOpenListForm}>
             <div className="iconcontainer">
               <RiMenuAddFill />
             </div>

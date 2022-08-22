@@ -35,6 +35,7 @@
 
 .todoslistmenu .lists.hidden {
   opacity: 0;
+  z-index: -999;
 }
 
 .todoslistmenu .lists li {

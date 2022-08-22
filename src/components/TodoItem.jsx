@@ -2,7 +2,7 @@ import { ImCheckboxUnchecked, ImCheckboxChecked } from "react-icons/im";
 
 import "../styles/TodoItem.css";
 
-const TodoItem = ({ todo, onToggleEditTodo }) => {
+const TodoItem = ({ todo, onToggleEditTodo, onCompleteTodo }) => {
   const getDateTimeString = () => {
     let string = "";
     if (todo.date) {
@@ -14,13 +14,19 @@ const TodoItem = ({ todo, onToggleEditTodo }) => {
   };
 
   return (
-    <div className="todoitem" onClick={() => onToggleEditTodo(todo)}>
+    <div className="todoitem">
       {todo.finished ? (
-        <ImCheckboxChecked className="completed" />
+        <ImCheckboxChecked
+          className="completed"
+          onClick={() => onCompleteTodo(todo)}
+        />
       ) : (
-        <ImCheckboxUnchecked className="completed" />
+        <ImCheckboxUnchecked
+          className="completed"
+          onClick={() => onCompleteTodo(todo)}
+        />
       )}
-      <div className="data">
+      <div className="data" onClick={() => onToggleEditTodo(todo)}>
         <span className="description">{todo.description}</span>
         <span className="date">{getDateTimeString()}</span>
         <span className="list">{todo.list}</span>
