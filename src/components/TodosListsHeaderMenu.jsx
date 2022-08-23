@@ -7,13 +7,27 @@ import { RiMenuAddFill } from "react-icons/ri";
 import "../styles/TodosListMenu.css";
 import React, { useState, useEffect, useRef } from "react";
 
-const TodosListMenu = ({ options, total, completed, onOpenListForm }) => {
+const TodosListMenu = ({
+  options,
+  total,
+  completed,
+  onOpenListForm,
+  onFilterChange,
+}) => {
   const [toggleMenu, setToggleMenu] = useState(false);
+  const [filter, setFilter] = useState("All");
+
   const elementRef = useRef(null);
 
-  const currentSelection = "Default";
+  /*  const currentSelection = "Default"; */
   const handleToggleMenu = () => {
     setToggleMenu((prev) => !prev);
+  };
+
+  const handleFilter = (type) => {
+    setFilter(type);
+    onFilterChange(type);
+    handleToggleMenu();
   };
 
   useEffect(() => {
@@ -28,11 +42,12 @@ const TodosListMenu = ({ options, total, completed, onOpenListForm }) => {
       document.removeEventListener("click", handleClickOutside);
     };
   }, []);
+
   return (
     <React.Fragment>
       <div className="todoslistmenu" ref={elementRef}>
         <div className="current" onClick={handleToggleMenu}>
-          <span>{currentSelection}</span>
+          <span>{filter}</span>
 
           <FaAngleDown
             color="white"
@@ -40,7 +55,7 @@ const TodosListMenu = ({ options, total, completed, onOpenListForm }) => {
           />
         </div>
         <ul className={`lists${toggleMenu ? "" : " hidden"}`}>
-          <li className="default">
+          <li className="default" onClick={() => handleFilter("All")}>
             <div className="iconcontainer">
               <AiFillHome />
             </div>
@@ -48,7 +63,11 @@ const TodosListMenu = ({ options, total, completed, onOpenListForm }) => {
             <span>{total}</span>
           </li>
           {options.map((option, index) => (
-            <li key={index} className="listitem">
+            <li
+              key={index}
+              className="listitem"
+              onClick={() => handleFilter(option.label)}
+            >
               <div className="iconcontainer">
                 <BsCardChecklist color="white" />
               </div>
@@ -56,7 +75,7 @@ const TodosListMenu = ({ options, total, completed, onOpenListForm }) => {
               <span>{option.length}</span>
             </li>
           ))}
-          <li className="default">
+          <li className="default" onClick={() => handleFilter("Completed")}>
             <div className="iconcontainer">
               <TiInputChecked width="50" height="25" />
             </div>

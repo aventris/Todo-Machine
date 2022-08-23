@@ -38,7 +38,7 @@ const NewTodo = ({
       setFormData({ ...data });
     }
   }, []);
-  console.log(todos);
+
   const selectOptions = todos.map((todos) => ({
     value: todos.list,
     label: todos.list,

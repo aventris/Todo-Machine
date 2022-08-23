@@ -7,6 +7,12 @@
   color: #f4fbff;
   background-color: #014f85;
   box-shadow: 0 0 1px 0 #000;
+  transition: all ease-in-out 500ms;
+}
+.todoitem.hidden {
+  opacity: 0;
+  position: relative;
+  transform: translateX(500px);
 }
 
 .todoitem .completed {
@@ -25,8 +31,13 @@
 
 .todoitem .data .date {
   color: #79c7f7;
+  font-size: 0.7rem;
+}
+.todoitem .data .date.overdue {
+  color: #ff6061;
 }
 
 .todoitem .data .list {
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 0.86);
+  font-size: 0.9rem;
 }

@@ -1,9 +1,7 @@
 .header {
   position: relative;
   height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+
   background: rgb(11, 103, 164);
   background: linear-gradient(
     0deg,
@@ -14,19 +12,26 @@
   box-shadow: 0 0 5px #202020;
 }
 
-.header .logo-icon {
+.header .main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.header .main .logo-icon {
   height: 20px;
   width: 20px;
   margin: 0 10px 0 10px;
 }
 
-.header .search-icon {
+.header .main .search-icon {
   margin: 0 10px 0 10px;
   width: 20px;
   height: 20px;
 }
 
-.header .todoslists {
+.header .main .todoslists {
   text-align: center;
   background-color: transparent;
   border: none;
@@ -35,9 +40,52 @@
   background-color: red;
 }
 
-.header .todoslists option {
+.header .main .todoslists option {
   padding: 0 !important;
   margin: 0;
   background-color: #004173;
   text-align: left;
+}
+
+.header .search {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.header .search .return-icon {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  margin: 0 10px;
+  color: white;
+  cursor: pointer;
+}
+
+.header .search input {
+  width: 100%;
+  outline: none;
+  border: none;
+  border-bottom: 1px solid black;
+  background: transparent;
+  color: white;
+}
+.header .search input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+.header .search input:focus {
+  border-bottom: 2px solid #00a3dc;
+}
+.header .search button {
+  padding: 0 10px;
+  height: 100%;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+.header .search .search-icon {
+  flex-shrink: 0;
+  width: 15px;
+  height: 15px;
 }
