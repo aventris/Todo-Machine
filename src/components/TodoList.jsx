@@ -1,7 +1,13 @@
 import TodoItem from "./TodoItem";
 
 import "../styles/TodoList.css";
-const TodoList = ({ todos, onToggleEditTodo, onCompleteTodo }) => {
+
+const TodoList = ({
+  todos,
+  onToggleEditTodo,
+  onCompleteTodo,
+  onDeleteTodo,
+}) => {
   const overdue = [];
   const dateless = [];
   const tomorrow = [];
@@ -9,98 +15,67 @@ const TodoList = ({ todos, onToggleEditTodo, onCompleteTodo }) => {
   const nextMonth = [];
   const later = [];
 
-  todos.forEach((todoList) => {
-    todoList.todos.forEach((todo) => {
-      if (todo.date) {
-        const todoDate = new Date(todo.date);
-        const today = new Date();
-        const controlDate = new Date();
+  const communPorps = {
+    onCompleteTodo: onCompleteTodo,
+    onToggleEditTodo: onToggleEditTodo,
+    onDeleteTodo: onDeleteTodo,
+  };
 
-        if (todoDate.getTime() < today.getTime())
-          overdue.push({ ...todo, list: todoList.list });
-        controlDate.setDate(controlDate.getDate() + 1);
-        if (
-          todoDate.getTime() < controlDate.getTime() &&
-          todoDate.getTime() > today.getTime()
-        )
-          tomorrow.push({ ...todo, list: todoList.list });
-        controlDate.setDate(controlDate.getDate() + 6);
-        if (
-          todoDate.getTime() < controlDate.getTime() &&
-          todoDate.getTime() > today.getTime()
-        )
-          nextWeek.push({ ...todo, list: todoList.list });
-        controlDate.setDate(controlDate.getDate() - 7);
-        controlDate.setMonth(controlDate.getMonth() + 1);
-        if (
-          todoDate.getTime() < controlDate.getTime() &&
-          todoDate.getTime() > today.getTime()
-        )
-          nextMonth.push({ ...todo, list: todoList.list });
-        if (todoDate.getTime() > controlDate.getTime())
-          later.push({ ...todo, list: todoList.list });
-      } else {
-        dateless.push({ ...todo, list: todoList.list });
-      }
+  let addToDueList = (todo) => {
+    const todoDate = new Date(todo.date).getTime();
+    const today = new Date();
+    const dueTimes = {
+      today: today.getTime(),
+      tomorrow: today.setDate(today.getDate() + 1),
+      nextWeek: today.setDate(today.getDate() + 6),
+      nextMonth: today.setMonth(today.getMonth() + 1, today.getDate() - 7),
+    };
+
+    if (todoDate < dueTimes.today) overdue.push(todo);
+    else if (todoDate < dueTimes.tomorrow) tomorrow.push(todo);
+    else if (todoDate < dueTimes.nextWeek) nextWeek.push(todo);
+    else if (todoDate < dueTimes.nextMonth) nextMonth.push(todo);
+    else later.push(todo);
+  };
+  const organizeTodos = () => {
+    todos.forEach((todoList) => {
+      todoList.todos.forEach((todo) => {
+        if (todo.date) {
+          addToDueList({ ...todo, list: todoList.list });
+        } else {
+          dateless.push({ ...todo, list: todoList.list });
+        }
+      });
     });
-  });
+  };
+
+  organizeTodos();
 
   return (
     <div className="todolist ">
       {overdue.length > 0 && <p className="overdue">Overdue</p>}
       {overdue.map((todo, index) => (
-        <TodoItem
-          onCompleteTodo={onCompleteTodo}
-          key={index}
-          todo={todo}
-          onToggleEditTodo={onToggleEditTodo}
-          overdue
-        />
+        <TodoItem {...communPorps} key={index} todo={todo} overdue />
       ))}
       {tomorrow.length > 0 && <p className="">Tomorrow</p>}
       {tomorrow.map((todo, index) => (
-        <TodoItem
-          onCompleteTodo={onCompleteTodo}
-          key={index}
-          todo={todo}
-          onToggleEditTodo={onToggleEditTodo}
-        />
+        <TodoItem {...communPorps} key={index} todo={todo} />
       ))}
       {nextWeek.length > 0 && <p className="">Next week</p>}
       {nextWeek.map((todo, index) => (
-        <TodoItem
-          onCompleteTodo={onCompleteTodo}
-          key={index}
-          todo={todo}
-          onToggleEditTodo={onToggleEditTodo}
-        />
+        <TodoItem {...communPorps} key={index} todo={todo} />
       ))}
       {nextMonth.length > 0 && <p className="">Next month</p>}
       {nextMonth.map((todo, index) => (
-        <TodoItem
-          onCompleteTodo={onCompleteTodo}
-          key={index}
-          todo={todo}
-          onToggleEditTodo={onToggleEditTodo}
-        />
+        <TodoItem {...communPorps} key={index} todo={todo} />
       ))}
       {later.length > 0 && <p className="">Later</p>}
       {later.map((todo, index) => (
-        <TodoItem
-          onCompleteTodo={onCompleteTodo}
-          key={index}
-          todo={todo}
-          onToggleEditTodo={onToggleEditTodo}
-        />
+        <TodoItem {...communPorps} key={index} todo={todo} />
       ))}
       {dateless.length > 0 && <p className="">Dateless</p>}
       {dateless.map((todo, index) => (
-        <TodoItem
-          onCompleteTodo={onCompleteTodo}
-          key={index}
-          todo={todo}
-          onToggleEditTodo={onToggleEditTodo}
-        />
+        <TodoItem {...communPorps} key={index} todo={todo} />
       ))}
     </div>
   );

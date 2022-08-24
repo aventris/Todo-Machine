@@ -27,14 +27,14 @@ const TODOS = [
       },
       {
         id: 3,
-        description: "Next week 1",
+        description: "Tomorrow 1",
         date: "2022-08-25",
         time: "11:50",
         finished: false,
       },
       {
         id: 4,
-        description: "Next week 2",
+        description: "Next Month 1",
         date: "2022-09-12",
         time: "11:50",
         finished: false,
@@ -48,8 +48,15 @@ const TODOS = [
       },
       {
         id: 6,
-        description: "Tommorow",
+        description: "Overdue",
         date: "2022-08-23",
+        time: "11:50",
+        finished: false,
+      },
+      {
+        id: 7,
+        description: "Next week 1",
+        date: "2022-08-27",
         time: "11:50",
         finished: false,
       },
@@ -160,7 +167,7 @@ const useTodos = (toggleEditForm, toggleAddForm) => {
         const tempTodoList = todoList.todos.filter((todo) => !todo.finished);
         uncompletedTodos.push({ ...todoList, todos: tempTodoList });
       });
-      console.log("Uncompleted", uncompletedTodos);
+      /*  console.log("Uncompleted", uncompletedTodos); */
       filteredTodos = [...uncompletedTodos];
     } else if (todoFilter === "completed") {
       const completedTodoList = [];
@@ -202,11 +209,29 @@ const useTodos = (toggleEditForm, toggleAddForm) => {
     setFilter(filter);
   };
 
+  const handleDeleteTodo = (todo) => {
+    const { list, ...todoInfo } = todo;
+    const todoListIndex = todos.findIndex((todoList) => todoList.list === list);
+
+    const todoIndex = todos[todoListIndex].todos.findIndex(
+      (todo) => todo.id === todoInfo.id
+    );
+
+    const newTodoList = [...todos[todoListIndex].todos];
+    newTodoList.splice(todoIndex, 1);
+
+    const newTodos = [...todos];
+    newTodos[todoListIndex].todos = newTodoList;
+
+    setTodos(newTodos);
+  };
+
   return {
     todos,
     setTodos,
     addNewTodo,
     handleEditTodo,
+    handleDeleteTodo,
     handleCompleteTodo,
     handleNewList,
     handleSearchInput,

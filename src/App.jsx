@@ -24,6 +24,7 @@ function App() {
     addNewTodo,
     handleCompleteTodo,
     handleEditTodo,
+    handleDeleteTodo,
     handleNewList,
     handleSearchInput,
     handleFilter,
@@ -42,6 +43,7 @@ function App() {
         todos={getCurrentTodos()}
         onToggleEditTodo={toggleEditForm}
         onCompleteTodo={handleCompleteTodo}
+        onDeleteTodo={handleDeleteTodo}
       />
       <Footer onOpenForm={toggleAddForm} />
       {todoFormIsOpen && (
@@ -60,6 +62,7 @@ function App() {
           onCloseForm={toggleEditForm}
           todos={todos}
           onToggleListForm={toggleNewListForm}
+          onDeleteTodo={handleDeleteTodo}
         />
       )}
       {listFormIsOpen && (
