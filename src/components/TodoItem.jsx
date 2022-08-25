@@ -19,7 +19,8 @@ const TodoItem = ({
   const getDateTimeString = () => {
     let string = "";
     if (todo.date) {
-      const date = new Date(todo.date);
+      const dateString = `${todo.date} ${todo.time ? todo.time : "00:00"}`;
+      const date = new Date(dateString);
       string += date.toDateString();
       if (todo.time) string = string + ", " + todo.time;
     }
@@ -28,7 +29,7 @@ const TodoItem = ({
 
   const handleCompleteTodo = (e) => {
     setCompleted((prevState) => !prevState);
-    e.currentTarget.parentNode.className = `${e.currentTarget.parentNode.className} hidden`;
+    elRef.current.className = `${elRef.current.className} hidden`;
     setTimeout(() => {
       onCompleteTodo(todo);
     }, 500);

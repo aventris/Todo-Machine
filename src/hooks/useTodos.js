@@ -1,94 +1,16 @@
-import { useState } from "react";
-
-const TODOS = [
-  {
-    list: "Default",
-    todos: [
-      {
-        id: 0,
-        description: "Default Todo 1",
-        date: "",
-        time: "",
-        finished: true,
-      },
-      {
-        id: 1,
-        description: "Default Todo 2",
-        date: "",
-        time: "",
-        finished: true,
-      },
-      {
-        id: 2,
-        description: "Default Todo 3",
-        date: "2022-08-31",
-        time: "11:50",
-        finished: true,
-      },
-      {
-        id: 3,
-        description: "Tomorrow 1",
-        date: "2022-08-25",
-        time: "11:50",
-        finished: false,
-      },
-      {
-        id: 4,
-        description: "Next Month 1",
-        date: "2022-09-12",
-        time: "11:50",
-        finished: false,
-      },
-      {
-        id: 5,
-        description: "Later",
-        date: "2022-10-31",
-        time: "11:50",
-        finished: false,
-      },
-      {
-        id: 6,
-        description: "Overdue",
-        date: "2022-08-23",
-        time: "11:50",
-        finished: false,
-      },
-      {
-        id: 7,
-        description: "Next week 1",
-        date: "2022-08-27",
-        time: "11:50",
-        finished: false,
-      },
-    ],
-  },
-  {
-    list: "Shopping",
-    todos: [
-      {
-        id: 0,
-        description: "Shopping Todo 1",
-        date: "2022-07-19",
-        time: "",
-        finished: true,
-      },
-      {
-        id: 1,
-        description: "Shopping Todo 2",
-        date: "2022-10-19",
-        time: "",
-        finished: false,
-      },
-    ],
-  },
-  { list: "Personal", todos: [] },
-  { list: "Work", todos: [] },
-];
-
-const useTodos = (toggleEditForm, toggleAddForm) => {
-  const [todos, setTodos] = useState(TODOS);
+import { useEffect, useState } from "react";
+import useLocalStorage from "./useLocalStorage";
+const useTodos = () => {
+  const { getDataFromLocalStorage, setDataToLocalStorage } = useLocalStorage();
+  const [todos, setTodos] = useState([]);
   const [filter, setFilter] = useState("All");
   const [search, setSearch] = useState("");
+
+  useEffect(() => {
+    const todosData = getDataFromLocalStorage();
+    setTodos(todosData);
+    // eslint-disable-next-line
+  }, []);
 
   const addNewTodo = (newTodo) => {
     const { list, ...todo } = newTodo;
@@ -110,12 +32,12 @@ const useTodos = (toggleEditForm, toggleAddForm) => {
       ...newTodos[todoListIndex],
       todos: newTodoInList,
     };
-    toggleAddForm();
+
     setTodos(newTodos);
+    setDataToLocalStorage(newTodos);
   };
 
   const handleEditTodo = (todo = null) => {
-    console.log("Edit todo", todo);
     const { list, ...newTodo } = todo;
     const todoListIndex = todos.findIndex((todoList) => todoList.list === list);
 
@@ -126,8 +48,8 @@ const useTodos = (toggleEditForm, toggleAddForm) => {
     const updatedTodos = [...todos];
     updatedTodos[todoListIndex].todos = newTodoList;
 
-    toggleEditForm();
     setTodos(updatedTodos);
+    setDataToLocalStorage(updatedTodos);
   };
 
   const handleCompleteTodo = (todo) => {
@@ -145,14 +67,14 @@ const useTodos = (toggleEditForm, toggleAddForm) => {
     updatedTodos[todoListIndex].todos = newTodosList;
 
     setTodos(updatedTodos);
+    setDataToLocalStorage(updatedTodos);
   };
 
   const handleNewList = (list) => {
-    console.log("New list", list);
     const newTodoList = { list: list, todos: [] };
     const newTodos = [...todos, newTodoList];
-    console.log(newTodos);
     setTodos(newTodos);
+    setDataToLocalStorage(newTodos);
   };
 
   const getCurrentTodos = () => {
@@ -224,6 +146,7 @@ const useTodos = (toggleEditForm, toggleAddForm) => {
     newTodos[todoListIndex].todos = newTodoList;
 
     setTodos(newTodos);
+    setDataToLocalStorage(newTodos);
   };
 
   return {

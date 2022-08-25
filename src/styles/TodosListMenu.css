@@ -70,7 +70,7 @@
 .todoslistmenu .lists li span:first-of-type {
   display: block;
   width: 100%;
-
+  white-space: nowrap;
   text-align: left;
   text-overflow: ellipsis;
   overflow: hidden;

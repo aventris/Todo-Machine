@@ -5,7 +5,15 @@
   max-width: 750px;
   background-color: #013c6c;
   top: 0;
-  left: 0;
+  transition: all ease-in-out 500ms;
+}
+
+.newtodo.hidden {
+  left: 100%;
+}
+.newtodo.visible {
+  left: 100%;
+  transform: translateX(-100%);
 }
 
 .newtodo .title {

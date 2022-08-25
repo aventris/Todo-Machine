@@ -29,7 +29,7 @@ function App() {
     handleSearchInput,
     handleFilter,
     getCurrentTodos,
-  } = useTodos(toggleEditForm, toggleAddForm);
+  } = useTodos();
 
   return (
     <div className="App">

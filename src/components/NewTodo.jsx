@@ -11,92 +11,40 @@ import {
 import { BsCheck } from "react-icons/bs";
 
 import "../styles/NewTodo.css";
-import { useEffect, useRef, useState } from "react";
+
 import DeleteConfirmation from "./DeleteConfirmation";
-/* import NewList from "./NewList"; */
 
-const NewTodo = ({
-  onAddNewTodo: handleNewTodo,
-  isEdit,
-  onCloseForm,
-  data,
-  onEditTodo: handleEditTodo,
-  todos,
-  onToggleListForm,
-  onDeleteTodo,
-}) => {
-  const datePicker = useRef(null);
-  const timePicker = useRef(null);
-  const [toggleConfirmation, setToggleConfirmation] = useState(false);
-  const [formData, setFormData] = useState({
-    description: "",
-    date: "",
-    time: "",
-    list: "Default",
-    finished: false,
-  });
+import useTodoForm from "../hooks/useTodoForm";
 
-  useEffect(() => {
-    if (isEdit) {
-      setFormData({ ...data });
-    }
-  }, [isEdit, data]);
-
-  const selectOptions = todos.map((todos) => ({
-    value: todos.list,
-    label: todos.list,
-  }));
-
-  const handleInput = (e) => {
-    setFormData({ ...formData, [e.target.id]: e.target.value });
-  };
-  const toggleDatePicker = () => {
-    datePicker.current.showPicker();
-  };
-  const toggleTimePicker = () => {
-    timePicker.current.showPicker();
-  };
-  const removeDate = () => {
-    datePicker.current.value = "";
-    setFormData({ ...formData, date: "" });
-    removeTime();
-  };
-  const removeTime = () => {
-    timePicker.current.value = "";
-    setFormData({ ...formData, time: "" });
-  };
-  const handleList = (value) => {
-    setFormData({ ...formData, list: value });
-  };
-  const handleFinished = (value) => {
-    setFormData({ ...formData, finished: value });
-  };
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!isEdit) {
-      if (formData.description) {
-        handleNewTodo(formData);
-      }
-    } else {
-      handleEditTodo(formData);
-    }
-  };
-
-  const handleDelete = () => {
-    onDeleteTodo(data);
-    onCloseForm();
-  };
-
-  const handleToggleConfirmation = () => {
-    setToggleConfirmation((prevState) => !prevState);
-  };
+const NewTodo = (props) => {
+  const {
+    animation,
+    formData,
+    datePicker,
+    timePicker,
+    selectOptions,
+    handleInput,
+    handleFinished,
+    handleList,
+    handleCloseForm,
+    handleToggleConfirmation,
+    handleToggleListForm,
+    handleSubmit,
+    handleDelete,
+    toggleConfirmation,
+    toggleDatePicker,
+    toggleTimePicker,
+    removeDate,
+    removeTime,
+  } = useTodoForm(props);
+  console.log(formData);
   return (
     <>
-      <div className="newtodo">
+      <div className={`newtodo${animation ? " visible" : " hidden"}`}>
         <div className="title">
-          <BiArrowBack onClick={() => onCloseForm()} />
-          <h3>{isEdit ? "Update todo" : "New Todo"}</h3>
-          {isEdit ? (
+          <BiArrowBack onClick={handleCloseForm} />
+          <h3>{props.isEdit ? "Update todo" : "New Todo"}</h3>
+          {props.isEdit ? (
             <AiFillDelete onClick={handleToggleConfirmation} />
           ) : (
             <span className="blank-space"></span>
@@ -114,7 +62,7 @@ const NewTodo = ({
               required
             />
           </div>
-          {isEdit && (
+          {props.isEdit && (
             <div className="checkbox">
               {formData.finished ? (
                 <ImCheckboxChecked
@@ -171,7 +119,7 @@ const NewTodo = ({
               onChange={handleList}
               value={formData.list}
               options={selectOptions}
-              onToggleListForm={onToggleListForm}
+              onToggleListForm={handleToggleListForm}
             />
           </div>
           <button type="submit">
