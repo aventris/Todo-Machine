@@ -37,7 +37,6 @@ const NewTodo = (props) => {
     removeDate,
     removeTime,
   } = useTodoForm(props);
-  console.log(formData);
   return (
     <>
       <div className={`newtodo${animation ? " visible" : " hidden"}`}>

@@ -78,7 +78,6 @@ const useTodos = () => {
   };
 
   const getCurrentTodos = () => {
-    //console.log("Filtering list...", { filter, search });
     const todoFilter = filter.toLowerCase();
     const todoSearch = search.toLowerCase();
 
@@ -89,7 +88,6 @@ const useTodos = () => {
         const tempTodoList = todoList.todos.filter((todo) => !todo.finished);
         uncompletedTodos.push({ ...todoList, todos: tempTodoList });
       });
-      /*  console.log("Uncompleted", uncompletedTodos); */
       filteredTodos = [...uncompletedTodos];
     } else if (todoFilter === "completed") {
       const completedTodoList = [];

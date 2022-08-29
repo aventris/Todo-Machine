@@ -1,0 +1,28 @@
+.addtodo-animation {
+  position: absolute;
+  bottom: 150px;
+  right: 45px;
+}
+
+.addtodo-animation h2 {
+  color: #0276bf;
+}
+
+.addtodo-animation svg {
+  color: #1b1b1b;
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  right: -10px;
+
+  animation: upAndDown 1s ease-in-out alternate infinite;
+}
+
+@keyframes upAndDown {
+  0% {
+    top: 100%;
+  }
+  100% {
+    top: 200%;
+  }
+}

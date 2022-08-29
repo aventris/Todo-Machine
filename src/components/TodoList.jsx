@@ -1,4 +1,5 @@
 import TodoItem from "./TodoItem";
+import EmptyTodosAnimation from "./EmptyTodosAnimation";
 
 import "../styles/TodoList.css";
 
@@ -15,6 +16,17 @@ const TodoList = ({
   const nextWeek = [];
   const nextMonth = [];
   const later = [];
+
+  const isEmpty = () => {
+    let todosIsEmpty = true;
+    for (let i = 0; i < todos.length; i++) {
+      if (todos[i].todos.length > 0) {
+        todosIsEmpty = false;
+        break;
+      }
+    }
+    return todosIsEmpty;
+  };
 
   const communPorps = {
     onCompleteTodo: onCompleteTodo,
@@ -59,43 +71,49 @@ const TodoList = ({
 
   organizeTodos();
 
-  return (
-    <div className="todolist ">
-      {overdue.length > 0 && <p className="overdue">Overdue</p>}
-      {overdue.map((todo) => (
-        <TodoItem
-          {...communPorps}
-          key={todo.list + todo.id}
-          todo={todo}
-          overdue
-        />
-      ))}
-      {today.length > 0 && <p className="">Today</p>}
-      {today.map((todo) => (
-        <TodoItem {...communPorps} key={todo.list + todo.id} todo={todo} />
-      ))}
-      {tomorrow.length > 0 && <p className="">Tomorrow</p>}
-      {tomorrow.map((todo) => (
-        <TodoItem {...communPorps} key={todo.list + todo.id} todo={todo} />
-      ))}
-      {nextWeek.length > 0 && <p className="">Next week</p>}
-      {nextWeek.map((todo) => (
-        <TodoItem {...communPorps} key={todo.list + todo.id} todo={todo} />
-      ))}
-      {nextMonth.length > 0 && <p className="">Next month</p>}
-      {nextMonth.map((todo) => (
-        <TodoItem {...communPorps} key={todo.list + todo.id} todo={todo} />
-      ))}
-      {later.length > 0 && <p className="">Later</p>}
-      {later.map((todo) => (
-        <TodoItem {...communPorps} key={todo.list + todo.id} todo={todo} />
-      ))}
-      {dateless.length > 0 && <p className="">Dateless</p>}
-      {dateless.map((todo) => (
-        <TodoItem {...communPorps} key={todo.list + todo.id} todo={todo} />
-      ))}
-    </div>
-  );
+  return {
+    ...(isEmpty() ? (
+      <div className="todolist ">
+        <EmptyTodosAnimation />
+      </div>
+    ) : (
+      <div className="todolist ">
+        {overdue.length > 0 && <p className="overdue">Overdue</p>}
+        {overdue.map((todo) => (
+          <TodoItem
+            {...communPorps}
+            key={todo.list + todo.id}
+            todo={todo}
+            overdue
+          />
+        ))}
+        {today.length > 0 && <p className="">Today</p>}
+        {today.map((todo) => (
+          <TodoItem {...communPorps} key={todo.list + todo.id} todo={todo} />
+        ))}
+        {tomorrow.length > 0 && <p className="">Tomorrow</p>}
+        {tomorrow.map((todo) => (
+          <TodoItem {...communPorps} key={todo.list + todo.id} todo={todo} />
+        ))}
+        {nextWeek.length > 0 && <p className="">Next week</p>}
+        {nextWeek.map((todo) => (
+          <TodoItem {...communPorps} key={todo.list + todo.id} todo={todo} />
+        ))}
+        {nextMonth.length > 0 && <p className="">Next month</p>}
+        {nextMonth.map((todo) => (
+          <TodoItem {...communPorps} key={todo.list + todo.id} todo={todo} />
+        ))}
+        {later.length > 0 && <p className="">Later</p>}
+        {later.map((todo) => (
+          <TodoItem {...communPorps} key={todo.list + todo.id} todo={todo} />
+        ))}
+        {dateless.length > 0 && <p className="">Dateless</p>}
+        {dateless.map((todo) => (
+          <TodoItem {...communPorps} key={todo.list + todo.id} todo={todo} />
+        ))}
+      </div>
+    )),
+  };
 };
 
 export default TodoList;
